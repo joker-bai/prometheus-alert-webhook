@@ -1,0 +1,17 @@
+adapter:
+  adapter_name: "RongLianYun"
+rongLianYun:
+  baseUrl : "https://app.cloopen.com:8883"
+  accountSid : "8aaf07085a3c0ea1015a44aee64302f2"
+  appToken   : "54b8454ee79549f98bf386582305b7fe"
+  appId      : "8aaf07086b8862cb016b8ca3a44402d8"
+  templateId : "555867"
+  phones : ["18716350569"]
+
+AliYun:
+  aliRegion: "cn-hangzhou"
+  accessKeyId: "xxxx"
+  accessSecret: "xxxx"
+  phoneNumbers: "11111111111,22222222222"
+  signName: "xxxx"
+  templateCode: "xxxx"
