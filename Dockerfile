@@ -1,6 +1,6 @@
 FROM alpine
 RUN mkdir /app && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
-ADD PrometheusAlertSMS /app
+ADD prometheus-alert-sms /app
 EXPOSE 9000
-CMD ["/app/PrometheusAlertSMS"]
+CMD ["/app/prometheus-alert-sms"]
