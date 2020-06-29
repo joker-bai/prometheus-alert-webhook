@@ -50,7 +50,7 @@ data:
       signName: "xxxx"
       templateCode: "xxxx"
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus-alert-sms
@@ -73,7 +73,7 @@ spec:
             - name: CONFIG_PATH
               value: /app/conf/sms.yaml
           ports:
-            - name: app_port
+            - name: app-port
               containerPort: 9000
               protocol: TCP
           resources:
@@ -101,7 +101,7 @@ spec:
   selector:
     app: prometheus-alert-sms
   ports:
-    - name: app_port
+    - name: app-port
       port: 9000
       targetPort: 9000
 
