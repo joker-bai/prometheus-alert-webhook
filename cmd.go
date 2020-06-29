@@ -17,7 +17,7 @@ var Settings conf.Config
 func init() {
 	configPath := os.Getenv("CONFIG_PATH")
 	if configPath == "" {
-		configPath = "./conf/sms.yaml"
+		configPath = "/app/conf/sms.yaml"
 	}
 	file, err := ioutil.ReadFile(configPath)
 	dir, _ := os.Getwd()
