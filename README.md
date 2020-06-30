@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
         - name: prometheus-alert-sms
-          image: registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.1
+          image: registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7
           imagePullPolicy: IfNotPresent
           env:
             - name: CONFIG_PATH
