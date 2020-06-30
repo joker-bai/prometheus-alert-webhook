@@ -16,12 +16,12 @@ sh build.sh
 ```
 3、打包镜像
 ```shell script
-docker build -t registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.1 .
+docker build -t registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7 .
 ```
 注：镜像地址更换成自己的仓库地址  
 4、推送镜像到镜像仓库
 ```shell script
-docker push registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.1
+docker push registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7
 ```
 5、修改项目目录下的prometheus-alert-sms.yaml
 ```yaml
