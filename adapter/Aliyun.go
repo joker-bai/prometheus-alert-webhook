@@ -1,6 +1,7 @@
 package adapter
 
 import (
+	"code.coolops.cn/prometheus-alert-sms/alertMessage"
 	"encoding/json"
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
@@ -28,7 +29,7 @@ func InitAliYun(aliRegion,accessKeyId,accessSecret,signName,phoneNumbers,templat
 	}
 }
 
-func (a aliyun)Cmd(sendData map[string]interface{}) {
+func (a aliyun)Cmd(sendData alertMessage.AlertMessage) {
 	client, err := dysmsapi.NewClientWithAccessKey(a.aliRegion,a.accessKeyId,a.accessSecret)
 
 	request := dysmsapi.CreateSendSmsRequest()
@@ -50,7 +51,7 @@ func (a aliyun)Cmd(sendData map[string]interface{}) {
 	fmt.Printf("response is %#v\n", response)
 }
 
-func (a aliyun)formatData(sendData map[string]interface{})string{
+func (a aliyun)formatData(sendData alertMessage.AlertMessage)string{
 	//alterType := sendData["告警类型"].(string)
 	//alterHost := sendData["实例名称"].(string)
 	//alterTime := sendData["故障时间"].(string)

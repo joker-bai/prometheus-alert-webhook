@@ -2,6 +2,7 @@ package main
 
 import (
 	"code.coolops.cn/prometheus-alert-sms/adapter"
+	"code.coolops.cn/prometheus-alert-sms/alertMessage"
 	"code.coolops.cn/prometheus-alert-sms/conf"
 	"encoding/json"
 	"fmt"
@@ -41,7 +42,8 @@ func RunCmd(ctx *gin.Context) {
 	}
 	log.Println("接受到的报警数据",string(data))
 	// 对数据进行序列号
-	var sendData map[string]interface{}
+	//var sendData map[string]interface{}
+	var sendData alertMessage.AlertMessage
 	_ = json.Unmarshal(data, &sendData)
 	log.Println("转换后的报警数据",sendData)
 	getAdapter := Settings.Adapter.AdapterName

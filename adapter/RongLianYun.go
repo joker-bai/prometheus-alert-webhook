@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"bytes"
+	"code.coolops.cn/prometheus-alert-sms/alertMessage"
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
@@ -34,7 +35,7 @@ func InitRongLianYun(baseUrl, accountSid, appToken, appId, templateId string, ph
 	}
 }
 
-func (r rongLianYun) Cmd(sendData map[string]interface{}) {
+func (r rongLianYun) Cmd(sendData alertMessage.AlertMessage) {
 	newData := r.formatData(sendData)
 	// 获取时间戳
 	r.timestamp = time.Now().Format("20060102150405")
@@ -49,14 +50,14 @@ func (r rongLianYun) Cmd(sendData map[string]interface{}) {
 	}
 }
 
-func (r rongLianYun)formatData(sendData map[string]interface{})[]string{
+func (r rongLianYun)formatData(sendData alertMessage.AlertMessage)[]string{
 	// 通知类型，主机，故障，时间
 	var formatData = make([]string, 0, 10)
-	alterType := sendData["告警类型"].(string)
-	alterHost := sendData["实例名称"].(string)
-	alterTime := sendData["故障时间"].(string)
-	alterDetails := sendData["告警详情"].(string)
-	formatData = append(formatData, alterType, alterHost, alterDetails, alterTime)
+	//alterType := sendData["告警类型"]
+	//alterHost := sendData["实例名称"]
+	//alterTime := sendData["故障时间"]
+	//alterDetails := sendData["告警详情"]
+	//formatData = append(formatData, alterType, alterHost, alterDetails, alterTime)
 	return formatData
 }
 
