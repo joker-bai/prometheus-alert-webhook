@@ -46,6 +46,7 @@ func RunCmd(ctx *gin.Context) {
 	var sendData alertMessage.AlertMessage
 	_ = json.Unmarshal(data, &sendData)
 	log.Println("转换后的报警数据",sendData)
+	// 对数据进行格式化
 	getAdapter := Settings.Adapter.AdapterName
 
 	switch getAdapter {
@@ -74,4 +75,18 @@ func RunCmd(ctx *gin.Context) {
 		log.Println("没有找到对应的adapter")
 	}
 
+}
+
+func formatData(sendData alertMessage.AlertMessage){
+	// 获取状态，根据状态判断是故障还是恢复
+	status := sendData.Status
+	switch status {
+	case "resolved":
+		log.Println("故障恢复消息")
+	case "firing":
+		log.Println("故障告警消息")
+	default:
+		log.Println("无效的消息")
+		return
+	}
 }
