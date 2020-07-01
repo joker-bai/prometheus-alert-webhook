@@ -42,6 +42,26 @@ spec:
         - name: prometheus-alert-sms
           image: registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthCheck
+              port: tcp-9000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthCheck
+                port: tcp-9000
+                scheme: HTTP
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
           env:
             - name: CONFIG_PATH
               value: /app/conf/sms.yaml
