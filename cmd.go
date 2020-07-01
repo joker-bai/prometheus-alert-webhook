@@ -39,10 +39,11 @@ func RunCmd(ctx *gin.Context) {
 		log.Println("获取消息数据失败")
 		panic(err)
 	}
-
+	log.Println("接受到的报警数据",data)
 	// 对数据进行序列号
 	var sendData map[string]interface{}
 	_ = json.Unmarshal(data, &sendData)
+	log.Println("转换后的报警数据",sendData)
 	getAdapter := Settings.Adapter.AdapterName
 
 	switch getAdapter {
