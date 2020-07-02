@@ -1,4 +1,5 @@
 FROM alpine
+COPY /etc/localtime /etc/localtime
 RUN mkdir /app && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
 COPY conf/sms.yaml /app/conf/
