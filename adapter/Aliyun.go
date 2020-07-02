@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"code.coolops.cn/prometheus-alert-sms/alertMessage"
+	"code.coolops.cn/prometheus-alert-sms/utils"
 	"encoding/json"
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
@@ -31,6 +32,10 @@ func InitAliYun(aliRegion,accessKeyId,accessSecret,signName,phoneNumbers,templat
 
 func (a aliyun)Cmd(sendData alertMessage.AlertMessage) {
 	client, err := dysmsapi.NewClientWithAccessKey(a.aliRegion,a.accessKeyId,a.accessSecret)
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
 
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
@@ -41,14 +46,16 @@ func (a aliyun)Cmd(sendData alertMessage.AlertMessage) {
 	// 模板ID
 	request.TemplateCode = a.templateCode
 	// 需要发送的数据
-	a.sendData = a.formatData(sendData)
-	request.TemplateParam = a.sendData
+	for _, alert := range sendData.Alerts{
+		a.sendData = utils.FormatData(alert)
+		request.TemplateParam = a.sendData
 
-	response, err := client.SendSms(request)
-	if err != nil {
-		fmt.Print(err.Error())
+		response, err := client.SendSms(request)
+		if err != nil {
+			fmt.Print(err.Error())
+		}
+		fmt.Printf("response is %#v\n", response)
 	}
-	fmt.Printf("response is %#v\n", response)
 }
 
 func (a aliyun)formatData(sendData alertMessage.AlertMessage)string{

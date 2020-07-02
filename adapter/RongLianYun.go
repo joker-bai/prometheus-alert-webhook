@@ -3,12 +3,14 @@ package adapter
 import (
 	"bytes"
 	"code.coolops.cn/prometheus-alert-sms/alertMessage"
+	"code.coolops.cn/prometheus-alert-sms/utils"
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -36,7 +38,7 @@ func InitRongLianYun(baseUrl, accountSid, appToken, appId, templateId string, ph
 }
 
 func (r rongLianYun) Cmd(sendData alertMessage.AlertMessage) {
-	newData := r.formatData(sendData)
+	//newData := r.formatData(sendData)
 	// 获取时间戳
 	r.timestamp = time.Now().Format("20060102150405")
 
@@ -46,18 +48,29 @@ func (r rongLianYun) Cmd(sendData alertMessage.AlertMessage) {
 	// 构造请求的url
 	requestUrl := r.baseUrl + "/2013-12-26/Accounts/" + r.accountSid + "/SMS/TemplateSMS?sig=" + upperSign
 	for _, phone := range r.phones  {
-		r.sendSMS(requestUrl, phone, newData)
+		for _, alert := range sendData.Alerts{
+			newData := utils.FormatData(alert)
+			sendNewData := r.formatData(newData)
+			r.sendSMS(requestUrl, phone, sendNewData)
+		}
+
 	}
 }
 
-func (r rongLianYun)formatData(sendData alertMessage.AlertMessage)[]string{
+func (r rongLianYun)formatData(sendData string)[]string{
 	// 通知类型，主机，故障，时间
 	var formatData = make([]string, 0, 10)
-	//alterType := sendData["告警类型"]
-	//alterHost := sendData["实例名称"]
-	//alterTime := sendData["故障时间"]
-	//alterDetails := sendData["告警详情"]
-	//formatData = append(formatData, alterType, alterHost, alterDetails, alterTime)
+	var newData map[string]string
+	err := json.Unmarshal([]byte(sendData), &newData)
+	if err != nil {
+		log.Println("反序列化需要发送的数据失败")
+		return nil
+	}
+	alterType := newData["AlertType"]
+	alterHost := newData["InstanceName"]
+	alterTime := newData["FaultTime"]
+	alterDetails := newData["AlertDetails"]
+	formatData = append(formatData, alterType, alterHost, alterDetails, alterTime)
 	return formatData
 }
 

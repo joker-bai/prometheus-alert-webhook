@@ -77,16 +77,3 @@ func RunCmd(ctx *gin.Context) {
 
 }
 
-func formatData(sendData alertMessage.AlertMessage){
-	// 获取状态，根据状态判断是故障还是恢复
-	status := sendData.Status
-	switch status {
-	case "resolved":
-		log.Println("故障恢复消息")
-	case "firing":
-		log.Println("故障告警消息")
-	default:
-		log.Println("无效的消息")
-		return
-	}
-}

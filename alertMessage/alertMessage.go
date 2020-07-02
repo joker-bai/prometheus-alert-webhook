@@ -29,12 +29,15 @@ type Labels struct {
 	Instance string `json:"instance"`
 	Job string `json:"job"`
 	Namespace string `json:"namespace"`
+	Pod string `json:"pod"`
 	Prometheus string `json:"prometheus"`
 	Severity string `json:"severity"`
 }
 
 type Annotations struct {
 	Message string `json:"message"`
+	Description string `json:"description"`
+	Summary string `json:"summary"`
 	RunBookURL string `json:"runbook_url"`
 }
 
