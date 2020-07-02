@@ -1,7 +1,7 @@
 package conf
 
 type Config struct {
-	RongLianYun RongLianYun `yaml:"rongLianYun"`
+	RongLianYun RongLianYun `yaml:"RongLianYun"`
 	Adapter
 	AliYun AliYun `yaml:"AliYun"`
 }
