@@ -69,6 +69,26 @@ spec:
         - name: prometheus-alert-sms
           image: registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthCheck
+              port: tcp-9000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthCheck
+                port: tcp-9000
+                scheme: HTTP
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
           env:
             - name: CONFIG_PATH
               value: /app/conf/sms.yaml
@@ -104,7 +124,7 @@ spec:
     - name: app-port
       port: 9000
       targetPort: 9000
-
+      protocol: TCP
 ```
 到自己购买的短信服务获取对应的信息。
 7、部署yaml文件
