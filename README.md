@@ -79,7 +79,7 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 2
-            readinessProbe:
+          readinessProbe:
               failureThreshold: 3
               httpGet:
                 path: /healthCheck
