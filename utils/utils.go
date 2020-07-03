@@ -28,14 +28,15 @@ func FormatData(alert alertMessage.Alerts) string {
 
 func formatFiringData(alert alertMessage.Alerts) string {
 	var newData alertMessage.FaultAlarm
-	newData.AlertType = alert.Labels.AlertName
+	newData.AlertName = alert.Labels.AlertName
 	newData.AlertDetails = alert.Annotations.Message + alert.Annotations.Description + alert.Annotations.Summary
-	newData.AlertLevel = alert.Labels.Severity
+	newData.AlertSeverity = alert.Labels.Severity
 	newData.AlertStatus = alert.Status
 	newData.FaultTime = alert.StartsAt
-	newData.InstanceInfo = alert.Labels.Instance
-	newData.InstanceName = alert.Labels.Pod
+	newData.Instance = alert.Labels.Instance
+	newData.PodName = alert.Labels.Pod
 	newData.Namespace = alert.Labels.Namespace
+	newData.NodeName = alert.Labels.Node
 	mData, err := json.Marshal(newData)
 	if err != nil {
 		log.Println("序列化数据失败")
@@ -46,13 +47,14 @@ func formatFiringData(alert alertMessage.Alerts) string {
 
 func formatResolvedData(alert alertMessage.Alerts) string {
 	var newData alertMessage.FaultRecovery
-	newData.AlertType = alert.Labels.AlertName
+	newData.AlertName = alert.Labels.AlertName
 	newData.AlertDetails = alert.Annotations.Message + alert.Annotations.Description + alert.Annotations.Summary
-	newData.AlertLevel = alert.Labels.Severity
+	newData.AlertSeverity = alert.Labels.Severity
 	newData.AlertStatus = alert.Status
 	newData.FaultTime = alert.StartsAt
-	newData.InstanceInfo = alert.Labels.Instance
-	newData.InstanceName = alert.Labels.Pod
+	newData.Instance = alert.Labels.Instance
+	newData.PodName = alert.Labels.Pod
+	newData.NodeName = alert.Labels.Node
 	newData.Namespace = alert.Labels.Namespace
 	newData.RecoveryTime = alert.EndsAt
 	mData, err := json.Marshal(newData)

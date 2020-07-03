@@ -4,9 +4,9 @@ type FaultRecovery struct {
 	// 告警状态
 	AlertStatus string
 	// 告警类型
-	AlertType string
+	AlertName string
 	// 告警级别
-	AlertLevel string
+	AlertSeverity string
 	// 告警详情
 	AlertDetails string
 	// 故障时间
@@ -14,9 +14,11 @@ type FaultRecovery struct {
 	// 恢复时间
 	RecoveryTime string
 	// 实例信息
-	InstanceInfo string
+	Instance string
 	// 命名空间
 	Namespace string
 	// 实例名称
-	InstanceName string
+	PodName string
+	// 节点信息
+	NodeName string
 }

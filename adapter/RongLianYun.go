@@ -67,7 +67,7 @@ func (r rongLianYun)formatData(sendData string)[]string{
 		return nil
 	}
 	alterType := newData["AlertType"]
-	alterHost := newData["InstanceInfo"]
+	alterHost := newData["Instance"]
 	alterTime := newData["FaultTime"]
 	alterDetails := newData["AlertDetails"]
 	formatData = append(formatData, alterType, alterHost, alterDetails, alterTime)

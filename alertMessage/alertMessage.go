@@ -32,6 +32,7 @@ type Labels struct {
 	Pod string `json:"pod"`
 	Prometheus string `json:"prometheus"`
 	Severity string `json:"severity"`
+	Node string `json:"node"`
 }
 
 type Annotations struct {
