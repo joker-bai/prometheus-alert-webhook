@@ -126,7 +126,7 @@ spec:
       targetPort: 9000
       protocol: TCP
 ```
-到自己购买的短信服务获取对应的信息。
+到自己购买的短信服务获取对应的信息。  
 7、部署yaml文件
 ```shell script
 kubectl apply -f prometheus-alert-sms.yaml
