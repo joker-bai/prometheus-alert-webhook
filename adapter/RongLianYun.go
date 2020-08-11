@@ -47,6 +47,7 @@ func (r rongLianYun) Cmd(sendData alertMessage.AlertMessage) {
 	upperSign := strings.ToUpper(sign)
 	// 构造请求的url
 	requestUrl := r.baseUrl + "/2013-12-26/Accounts/" + r.accountSid + "/SMS/TemplateSMS?sig=" + upperSign
+	// 把报警信息进行聚合去重，
 	for _, phone := range r.phones  {
 		for _, alert := range sendData.Alerts{
 			newData := utils.FormatData(alert)
