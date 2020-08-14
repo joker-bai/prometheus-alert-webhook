@@ -5,9 +5,11 @@ WORKDIR /opt
 RUN go build
 
 FROM alpine
-COPY localtime /etc/localtime
-RUN mkdir /app && \
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+RUN apk add --no-cache tzdata \
+    && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && mkdir /app
+ENV TZ Asia/Shanghai
 COPY --from=build-env /usr/local/go/lib/time/zoneinfo.zip /usr/local/go/lib/time/zoneinfo.zip
 COPY --from=build-env /opt/conf/conf.yaml /app/conf/
 COPY --from=build-env /opt/prometheus-alert-sms /app
