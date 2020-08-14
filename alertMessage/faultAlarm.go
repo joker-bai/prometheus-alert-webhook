@@ -8,6 +8,8 @@ type FaultAlarm struct {
 	AlertName string
 	// 告警级别
 	AlertSeverity string
+	// 告警主题
+	AlertSummary string
 	// 告警详情
 	AlertDetails string
 	// 故障时间

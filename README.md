@@ -91,7 +91,7 @@ spec:
               timeoutSeconds: 2
           env:
             - name: CONFIG_PATH
-              value: /app/conf/sms.yaml
+              value: /app/conf/conf.yaml
           ports:
             - name: app-port
               containerPort: 9000
@@ -105,8 +105,8 @@ spec:
               memory: 1Gi
           volumeMounts:
             - name: sms-conf
-              mountPath: /app/conf/sms.yaml
-              subPath: sms.yaml
+              mountPath: /app/conf/conf.yaml
+              subPath: conf.yaml
       volumes:
         - name: sms-conf
           configMap:

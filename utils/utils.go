@@ -29,7 +29,8 @@ func FormatData(alert alertMessage.Alerts) string {
 func formatFiringData(alert alertMessage.Alerts) string {
 	var newData alertMessage.FaultAlarm
 	newData.AlertName = alert.Labels.AlertName
-	newData.AlertDetails = alert.Annotations.Message + alert.Annotations.Description + alert.Annotations.Summary
+	newData.AlertSummary = alert.Annotations.Summary
+	newData.AlertDetails = alert.Annotations.Message + alert.Annotations.Description
 	newData.AlertSeverity = alert.Labels.Severity
 	newData.AlertStatus = alert.Status
 	newData.FaultTime = alert.StartsAt
@@ -48,7 +49,8 @@ func formatFiringData(alert alertMessage.Alerts) string {
 func formatResolvedData(alert alertMessage.Alerts) string {
 	var newData alertMessage.FaultRecovery
 	newData.AlertName = alert.Labels.AlertName
-	newData.AlertDetails = alert.Annotations.Message + alert.Annotations.Description + alert.Annotations.Summary
+	newData.AlertSummary = alert.Annotations.Summary
+	newData.AlertDetails = alert.Annotations.Message + alert.Annotations.Description
 	newData.AlertSeverity = alert.Labels.Severity
 	newData.AlertStatus = alert.Status
 	newData.FaultTime = alert.StartsAt
