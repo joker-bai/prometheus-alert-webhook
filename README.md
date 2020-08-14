@@ -1,20 +1,19 @@
 # prometheus-alert-sms
 ----
-用于prometheus使用alertmanager发送短信。
+用于prometheus使用alertmanager的webhook。
 目前支持：
-- 容联云
-- 阿里云
+- 短信
+    - 容联云
+    - 阿里云
+- 钉钉
+- 企业微信
 ## 部署
 1、下载代码
 ```shell script
 git clone https://github.com/cool-ops/prometheus-alert-sms.git
 ```
-2、编译代码
-```shell script
-cd prometheus-alert-sms/
-sh build.sh
-```
-3、打包镜像
+
+2、打包镜像
 ```shell script
 docker build -t registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7 .
 ```
