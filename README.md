@@ -31,23 +31,44 @@ metadata:
   namespace: monitoring
 data:
   sms.yaml: |
-    adapter:
-      adapter_name: "RongLianYun"
-    RongLianYun:
-      baseUrl : "https://app.cloopen.com:8883"
-      accountSid : "xxxxxx"
-      appToken   : "xxxxxx"
-      appId      : "xxxxx"
-      templateId : "xxx"
-      phones : ["11111111111","22222222222"]
-
-    AliYun:
-      aliRegion: "cn-hangzhou"
-      accessKeyId: "xxxx"
-      accessSecret: "xxxx"
-      phoneNumbers: "11111111111,22222222222"
-      signName: "xxxx"
-      templateCode: "xxxx"
+      adapter:
+          - sms
+          - wechat
+          - dingTalk
+    
+      # 短信平台
+      sms:
+        enable: false
+        adapter_name: "RongLianYun"
+    
+        # 容联云短信平台
+        RongLianYun:
+          baseUrl: "https://app.cloopen.com:8883"
+          accountSid: "xxxxx"
+          appToken: "xxxxxx"
+          appId: "xxxx"
+          templateId: "xxxx"
+          phones: ["1811111111"]
+    
+        # 阿里云短信平台
+        AliYun:
+          aliRegion: "cn-hangzhou"
+          accessKeyId: "xxxx"
+          accessSecret: "xxxx"
+          phoneNumbers: "11111111111,22222222222"
+          signName: "xxxx"
+          templateCode: "xxxx"
+      wechat:
+        enable: false
+        toUser: "Joker|Jase"
+        agentId: "1000002"
+        corpId: "xxxxxx"
+        corpSecret: "xxxxxx"
+    
+      dingTalk:
+        enable: true
+        secret: "SEC94xxxxxx"
+        access_token: "b438d4ce40c0xxxxx" 
 ---
 apiVersion: apps/v1
 kind: Deployment
