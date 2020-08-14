@@ -1,7 +1,8 @@
 FROM golang:1.12.6 AS build-env
 ADD . /opt
+ENV GOPROXY=https://goproxy.cn
 WORKDIR /opt
-RUN sh build.sh
+RUN go build
 
 FROM alpine
 COPY localtime /etc/localtime
