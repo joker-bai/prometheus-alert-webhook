@@ -66,3 +66,8 @@ func formatResolvedData(alert alertMessage.Alerts) string {
 	}
 	return string(mData)
 }
+
+// 监听配置文件变化并重载
+func CheckConf(){
+
+}
