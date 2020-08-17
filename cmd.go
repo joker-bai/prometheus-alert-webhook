@@ -3,7 +3,7 @@ package main
 import (
 	"code.coolops.cn/prometheus-alert-sms/adapter"
 	"code.coolops.cn/prometheus-alert-sms/alertMessage"
-	"code.coolops.cn/prometheus-alert-sms/conf"
+	"code.coolops.cn/prometheus-alert-sms/utils"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -12,25 +12,7 @@ import (
 	"log"
 )
 
-var Settings conf.Config
 
-//func init() {
-//	configPath := os.Getenv("CONFIG_PATH")
-//	if configPath == "" {
-//		configPath = "/app/conf/conf.yaml"
-//	}
-//	file, err := ioutil.ReadFile(configPath)
-//	dir, _ := os.Getwd()
-//	fmt.Println(dir)
-//	if err != nil {
-//		log.Println("加载配置文件失败")
-//		panic(err)
-//	}
-//	if err = yaml.Unmarshal(file, &Settings); err != nil {
-//		log.Println("配置文件反序列化失败")
-//		panic(err)
-//	}
-//}
 
 func init() {
 	viper.SetConfigName("conf")
@@ -40,25 +22,22 @@ func init() {
 		fmt.Printf("config file error: %s\n", err)
 		return
 	}
+
 }
-	//get := viper.Get("adapter")
-//}
 
 func RunCmd(ctx *gin.Context) {
+	utils.CheckConfig()
 	// 获取body数据
 	data, err := ioutil.ReadAll(ctx.Request.Body)
 	if err != nil {
 		log.Println("获取消息数据失败")
 		panic(err)
 	}
-	log.Println("接受到的报警数据",string(data))
+	//log.Println("接受到的报警数据",string(data))
 	// 对数据进行序列号
-	//var sendData map[string]interface{}
 	var sendData alertMessage.AlertMessage
 	_ = json.Unmarshal(data, &sendData)
-	log.Println("转换后的报警数据",sendData)
-	// 对数据进行格式化
-	// getAdapter := Settings.Adapter.AdapterName
+	//log.Println("转换后的报警数据",sendData)
 
 	// 从配置文件读取webhook配置
 	adapters := viper.GetStringSlice("adapter")

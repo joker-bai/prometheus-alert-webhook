@@ -3,8 +3,12 @@ package utils
 import (
 	"code.coolops.cn/prometheus-alert-sms/alertMessage"
 	"encoding/json"
+	"github.com/fsnotify/fsnotify"
 	"log"
+	"time"
 )
+
+var md5String string
 
 // 格式化数据
 func FormatData(alert alertMessage.Alerts) string {
@@ -67,7 +71,33 @@ func formatResolvedData(alert alertMessage.Alerts) string {
 	return string(mData)
 }
 
-// 监听配置文件变化并重载
-func CheckConf(){
-
+// 监听配置文件变化，如果变化则重启服务
+func CheckConfig(){
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		log.Println(err)
+	}
+	defer watcher.Close()
+	//done := make(chan bool)
+	go func() {
+		// 每5秒检查一次
+		ticker := time.NewTicker(time.Second*5)
+		for _ = range ticker.C{
+			select {
+			case event,ok:=<-watcher.Events:
+				if !ok{
+					return
+				}
+				if event.Op&fsnotify.Write == fsnotify.Write{
+					// 文件已经改变，做重启服务操作
+					log.Println("重启服务")
+				}
+			}
+		}
+	}()
+	err = watcher.Add("../conf")
+	if err != nil {
+		log.Fatal(err)
+	}
+	//<-done
 }
