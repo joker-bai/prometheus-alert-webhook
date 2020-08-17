@@ -6,9 +6,12 @@ import (
 	"code.coolops.cn/prometheus-alert-sms/utils"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"github.com/robfig/go-cache"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 const (
@@ -63,12 +66,21 @@ func InitWeChat(toUser,agentId,corpId,corpSecret string) *wechat{
 }
 
 func (w wechat)Cmd(sendData alertMessage.AlertMessage){
-	// 获取token
-	token, err := w.getToken()
-	if err != nil {
-		log.Println("get token from wechat failed.")
-		panic(err)
+	var token string
+	memCache:=cache.New(2*time.Minute,4*time.Minute)
+	cacheFromMem, ok := memCache.Get("wechatAccessToken")
+	if ok{
+		token = cacheFromMem.(string)
+	}else{
+		getToken, err := w.getToken()
+		if err != nil {
+			log.Println("get token from wechat failed.")
+			panic(err)
+		}
+		token = getToken.AccessToken
+		memCache.Set("wechatAccessToken",token,2*time.Minute)
 	}
+	fmt.Print(token)
 	// 获取警报内容
 	for _,data := range sendData.Alerts{
 		w.sendData = utils.FormatData(data)
@@ -84,7 +96,7 @@ func (w wechat)Cmd(sendData alertMessage.AlertMessage){
 			log.Println("发送数据序列化失败")
 			panic(err)
 		}
-		w.sendMsg(token.AccessToken,dataBytes)
+		w.sendMsg(token,dataBytes)
 	}
 }
 
