@@ -3,7 +3,6 @@ package main
 import (
 	"code.coolops.cn/prometheus-alert-sms/adapter"
 	"code.coolops.cn/prometheus-alert-sms/alertMessage"
-	"code.coolops.cn/prometheus-alert-sms/utils"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -26,7 +25,7 @@ func init() {
 }
 
 func RunCmd(ctx *gin.Context) {
-	utils.CheckConfig()
+	//utils.CheckConfig()
 	// 获取body数据
 	data, err := ioutil.ReadAll(ctx.Request.Body)
 	if err != nil {

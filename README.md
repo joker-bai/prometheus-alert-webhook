@@ -12,8 +12,12 @@
 ```shell script
 git clone https://github.com/cool-ops/prometheus-alert-sms.git
 ```
+2、编译
+```shell script
+sh build.sh
+```
 
-2、打包镜像
+3、打包镜像
 ```shell script
 docker build -t registry.cn-hangzhou.aliyuncs.com/rookieops/prometheus-alert-sms:v0.0.7 .
 ```
@@ -109,9 +113,6 @@ spec:
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 2
-          env:
-            - name: CONFIG_PATH
-              value: /app/conf/conf.yaml
           ports:
             - name: app-port
               containerPort: 9000

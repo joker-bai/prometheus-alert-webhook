@@ -7,6 +7,6 @@ require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.280
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.6.3
-	github.com/spf13/viper v1.7.1 // indirect
+	github.com/spf13/viper v1.7.1
 	gopkg.in/yaml.v2 v2.3.0
 )

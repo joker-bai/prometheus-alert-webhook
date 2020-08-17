@@ -62,16 +62,21 @@ func (r rongLianYun)formatData(sendData string)[]string{
 	// 通知类型，主机，故障，时间
 	var formatData = make([]string, 0, 10)
 	var newData map[string]string
+	alertHost := ""
 	err := json.Unmarshal([]byte(sendData), &newData)
 	if err != nil {
 		log.Println("反序列化需要发送的数据失败")
 		return nil
 	}
-	alterType := newData["AlertType"]
-	alterHost := newData["Instance"]
-	alterTime := newData["FaultTime"]
-	alterDetails := newData["AlertDetails"]
-	formatData = append(formatData, alterType, alterHost, alterDetails, alterTime)
+	alertType := newData["AlertType"]
+	if value,ok := newData["Instance"];ok && value != ""{
+		alertHost = value
+	}else{
+		alertHost = newData["PodName"]
+	}
+	alertTime := newData["FaultTime"]
+	alertDetails := newData["AlertDetails"]
+	formatData = append(formatData, alertType, alertHost, alertDetails, alertTime)
 	return formatData
 }
 
