@@ -67,7 +67,7 @@ func InitWeChat(toUser,agentId,corpId,corpSecret string) *wechat{
 
 func (w wechat)Cmd(sendData alertMessage.AlertMessage){
 	var token string
-	memCache:=cache.New(2*time.Minute,4*time.Minute)
+	memCache:=cache.New(2*time.Minute,5*time.Minute)
 	cacheFromMem, ok := memCache.Get("wechatAccessToken")
 	if ok{
 		token = cacheFromMem.(string)
