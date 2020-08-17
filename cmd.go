@@ -32,7 +32,7 @@ func RunCmd(ctx *gin.Context) {
 		log.Println("获取消息数据失败")
 		panic(err)
 	}
-	//log.Println("接受到的报警数据",string(data))
+	log.Println("接受报警数据")
 	// 对数据进行序列号
 	var sendData alertMessage.AlertMessage
 	_ = json.Unmarshal(data, &sendData)

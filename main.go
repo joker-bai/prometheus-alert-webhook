@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -13,5 +14,6 @@ func main() {
 		})
 	})
 	_ = g.Run(":9000")
+	log.Println("alertmanager webhook start success!!!!")
 }
 

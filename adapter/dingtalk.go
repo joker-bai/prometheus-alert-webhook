@@ -9,6 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -82,8 +83,10 @@ func (d dingtalk) sendMsg(msg dingMsg) {
 	resp, err := client.Do(req)
 	//关闭请求
 	defer resp.Body.Close()
-
 	if err != nil {
 		// handle error
+	}
+	if resp.StatusCode == http.StatusOK{
+		log.Println("发送报警信息到钉钉成功！！！")
 	}
 }

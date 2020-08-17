@@ -71,7 +71,9 @@ func (w wechat)Cmd(sendData alertMessage.AlertMessage){
 	cacheFromMem, ok := memCache.Get("wechatAccessToken")
 	if ok{
 		token = cacheFromMem.(string)
+		log.Println("获取微信token，命中缓存")
 	}else{
+		log.Println("未命中缓存，从服务端获取access token")
 		getToken, err := w.getToken()
 		if err != nil {
 			log.Println("get token from wechat failed.")

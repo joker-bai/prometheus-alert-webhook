@@ -23,7 +23,7 @@ type rongLianYun struct {
 	appId      string
 	templateId string
 	phones     []string
-	timestamp string
+	timestamp  string
 }
 
 func InitRongLianYun(baseUrl, accountSid, appToken, appId, templateId string, phones []string) *rongLianYun {
@@ -48,8 +48,8 @@ func (r rongLianYun) Cmd(sendData alertMessage.AlertMessage) {
 	// 构造请求的url
 	requestUrl := r.baseUrl + "/2013-12-26/Accounts/" + r.accountSid + "/SMS/TemplateSMS?sig=" + upperSign
 	// 把报警信息进行聚合去重，
-	for _, phone := range r.phones  {
-		for _, alert := range sendData.Alerts{
+	for _, phone := range r.phones {
+		for _, alert := range sendData.Alerts {
 			newData := utils.FormatData(alert)
 			sendNewData := r.formatData(newData)
 			r.sendSMS(requestUrl, phone, sendNewData)
@@ -58,7 +58,7 @@ func (r rongLianYun) Cmd(sendData alertMessage.AlertMessage) {
 	}
 }
 
-func (r rongLianYun)formatData(sendData string)[]string{
+func (r rongLianYun) formatData(sendData string) []string {
 	// 通知类型，主机，故障，时间
 	var formatData = make([]string, 0, 10)
 	var newData map[string]string
@@ -69,9 +69,9 @@ func (r rongLianYun)formatData(sendData string)[]string{
 		return nil
 	}
 	alertType := newData["AlertType"]
-	if value,ok := newData["Instance"];ok && value != ""{
+	if value, ok := newData["Instance"]; ok && value != "" {
 		alertHost = value
-	}else{
+	} else {
 		alertHost = newData["PodName"]
 	}
 	alertTime := newData["FaultTime"]
@@ -106,8 +106,13 @@ func (r rongLianYun) sendSMS(requestUrl, phone string, newdata []string) {
 	if err != nil {
 		panic(err)
 	}
-	all, _ := ioutil.ReadAll(do.Body)
-	fmt.Println(string(all))
+	if do.StatusCode == http.StatusOK {
+		log.Println("发送报警信息到" + phone + "成功！！！")
+	} else {
+		log.Println("发送报警信息到" + phone + "失败！！！")
+		all, _ := ioutil.ReadAll(do.Body)
+		fmt.Println(string(all))
+	}
 }
 
 func (r rongLianYun) md5Sign(nowTime string) string {
